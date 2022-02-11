@@ -50,7 +50,7 @@ document
     //take withdrawInputvalue function
     const inputAmmount = inputValue("withdraw-input");
     const totalBalance = balanceAmmount();
-    if (inputAmmount > 0 && inputAmmount < totalBalance) {
+    if (inputAmmount > 0 && inputAmmount <= totalBalance) {
       // added input value to html
       addedInput("withdraw-ammount", inputAmmount);
       //balance reduce
