@@ -1,40 +1,46 @@
-//Deposit functionality
+//customer input functionality
+function inputValue(inputid) {
+  const inputId = document.getElementById(inputid);
+  const inputValue = parseFloat(inputId.value);
+  //clear section
+  inputId.value = "";
+  return inputValue;
+}
+// deposit,withdraw functionality
+function addedInput(input, customerInput) {
+  const inputAmmountText = document.getElementById(input);
+  const previousAmmount = parseFloat(inputAmmountText.innerText);
+  inputAmmountText.innerText = previousAmmount + customerInput;
+}
+// balance functionality
+function balanceControl(inputValue, isAdd) {
+  const balanceAmmountText = document.getElementById("balance-ammount");
+  const previousAmmount = parseFloat(balanceAmmountText.innerText);
+  if (isAdd == true) {
+    balanceAmmountText.innerText = previousAmmount + inputValue;
+  } else {
+    balanceAmmountText.innerText = previousAmmount - inputValue;
+  }
+}
+//deposit functionality
 document
   .getElementById("deposit-button")
   .addEventListener("click", function () {
-    const depositInput = document.getElementById("deposit-input");
-    const depoInputValue = parseFloat(depositInput.value);
-    console.log(depoInputValue);
-    const depositAmmount = document.getElementById("deposit-ammount");
-    const previousAmmount = parseFloat(depositAmmount.innerText);
-    console.log(previousAmmount);
-    depositAmmount.innerText = previousAmmount + depoInputValue;
+    //take depositInputvalue function
+    const depoInputValue = inputValue("deposit-input");
+    // added input value to html
+    addedInput("deposit-ammount", depoInputValue);
     //balance ammount
-    const balanceAmmount = document.getElementById("balance-ammount");
-    const previousBalance = parseFloat(balanceAmmount.innerText);
-    balanceAmmount.innerText = previousBalance + depoInputValue;
-    //clear section
-    document.getElementById("deposit-input").value = "";
+    balanceControl(depoInputValue, true);
   });
 //withdraw functionality
 document
   .getElementById("withdraw-button")
   .addEventListener("click", function () {
-    const withdrawInput = document.getElementById("withdraw-input");
-    const withdrawAmmount = document.getElementById("withdraw-ammount");
-    const previousAmmount = parseFloat(withdrawAmmount.innerText);
-    const inputAmmount = parseFloat(withdrawInput.value);
-    //outputview
-    withdrawAmmount.innerText = previousAmmount + inputAmmount;
-    //balance reduce 
-    const balanceAmmount = document.getElementById("balance-ammount");
-    const previousBalance = parseFloat(balanceAmmount.innerText);
-    balanceAmmount.innerText = previousBalance - inputAmmount;
-    const checkAvailability = previousBalance - inputAmmount;
-    if (checkAvailability < 0) {
-        alert("You haven't enough balance for withdraw.");
-        balanceAmmount.innerText = 0;
-    }
-    //clear input
-    withdrawInput.value = "";
+    //take withdrawInputvalue function
+    const inputAmmount = inputValue("withdraw-input");
+    // added input value to html
+    addedInput("withdraw-ammount", inputAmmount);
+    //balance reduce
+    balanceControl(inputAmmount, false);
   });
