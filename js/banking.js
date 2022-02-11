@@ -12,10 +12,16 @@ function addedInput(input, customerInput) {
   const previousAmmount = parseFloat(inputAmmountText.innerText);
   inputAmmountText.innerText = previousAmmount + customerInput;
 }
+function balanceAmmount() {
+  const balanceAmmountText = document.getElementById("balance-ammount");
+  const previousAmmount = parseFloat(balanceAmmountText.innerText);
+  return previousAmmount;
+}
 // balance functionality
 function balanceControl(inputValue, isAdd) {
   const balanceAmmountText = document.getElementById("balance-ammount");
-  const previousAmmount = parseFloat(balanceAmmountText.innerText);
+  debugger;
+  const previousAmmount = balanceAmmount();
   if (isAdd == true) {
     balanceAmmountText.innerText = previousAmmount + inputValue;
   } else {
@@ -28,10 +34,14 @@ document
   .addEventListener("click", function () {
     //take depositInputvalue function
     const depoInputValue = inputValue("deposit-input");
-    // added input value to html
-    addedInput("deposit-ammount", depoInputValue);
-    //balance ammount
-    balanceControl(depoInputValue, true);
+    if (depoInputValue > 0) {
+      // added input value to html
+      addedInput("deposit-ammount", depoInputValue);
+      //balance ammount
+      balanceControl(depoInputValue, true);
+    } else {
+      alert("Please input positive number you want to add your account");
+    }
   });
 //withdraw functionality
 document
@@ -39,8 +49,15 @@ document
   .addEventListener("click", function () {
     //take withdrawInputvalue function
     const inputAmmount = inputValue("withdraw-input");
-    // added input value to html
-    addedInput("withdraw-ammount", inputAmmount);
-    //balance reduce
-    balanceControl(inputAmmount, false);
+    const totalBalance = balanceAmmount();
+    if (inputAmmount > 0 && inputAmmount < totalBalance) {
+      // added input value to html
+      addedInput("withdraw-ammount", inputAmmount);
+      //balance reduce
+      balanceControl(inputAmmount, false);
+    } else {
+      alert(
+        "Please input valid available ammount you want to withdraw from your account"
+      );
+    }
   });
